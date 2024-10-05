@@ -1,6 +1,3 @@
-Sure! Here's the README content formatted for easy copying and pasting into a VI editor:
-
-```markdown
 # Ansible Windows Services Management
 
 ## Overview
