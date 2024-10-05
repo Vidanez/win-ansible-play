@@ -2,7 +2,8 @@
 
 ## Overview
 
-This project demonstrates how to use Ansible to manage Windows services across multiple servers, including IIS (Internet Information Services) and Windows Time Service (w32time). It also covers deploying a sample application and registering it as a service with environment-specific configurations.
+This project demonstrates how to use Ansible to manage Windows services across multiple servers, including mange of services IIS (Internet Information Services) and Windows Time Service (w32time). 
+It also covers deploying a sample application and registering it as a service with environment-specific configurations.
 
 ## Folder Structure
 
