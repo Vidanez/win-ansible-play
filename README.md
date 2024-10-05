@@ -1,11 +1,11 @@
-# Ansible Windows Services Management
+#This is a exercise to answer differents point of a list of 5
+1. Ansible for Managing Windows Services
+2. Windows Server Monitoring
+3. VMWare
+4. Windows updates management
+5. Antivirus Management
 
-## Overview
-
-This project demonstrates how to use Ansible to manage Windows services across multiple servers, including mange of services IIS (Internet Information Services) and Windows Time Service (w32time). 
-It also covers deploying a sample application and registering it as a service with environment-specific configurations.
-
-## Folder Structure
+## Folder Structure for all points
 
 ```
 ansible-windows-services/
@@ -37,15 +37,29 @@ ansible-windows-services/
     └── production.yml
 ```
 
+
+# 1. Ansible Windows Services Management
+
+## Overview
+
+This project demonstrates how to use Ansible to install, configure, and start a Windows service across multiple servers.
+In this example services with parameters IIS (Internet Information Services) and without parameters Windows Time Service (w32time).
+It also covers deploying a sample application and registering it as a service with environment-specific configurations.
+
 ## Prerequisites
 
-1. **Ansible**: Install Ansible on your control machine.
+1. **Ansible**: Install Ansible on your control machine from where we will run the playbooks.
    ```sh
    sudo apt-get update
    sudo apt-get install ansible
    ```
+2. **pywinrm**: Install pywinrm on the control machine. We need it in order to manage the WinRM.
+   ```sh
+   pip install pywinrm
+   ```
 
 2. **WinRM Configuration on Windows Servers**: Run the following PowerShell script on each Windows server:
+   https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html
    ```powershell
    winrm quickconfig -q
    winrm set winrm/config/service '@{AllowUnencrypted="true"}'
@@ -54,10 +68,6 @@ ansible-windows-services/
    winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="1024"}'
    ```
 
-3. **pywinrm**: Install pywinrm on the control machine.
-   ```sh
-   pip install pywinrm
-   ```
 
 ## Playbooks
 
@@ -107,7 +117,7 @@ ansible-windows-services/
       # Documentation: https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
 ```
 
-### Routine Service Management Tasks
+### Routine Service Management Tasks check status, start, stop and restart
 
 **File**: `playbooks/service_management.yml`
 
@@ -174,7 +184,7 @@ ansible-windows-services/
       # Documentation: https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
 ```
 
-## Inventory Files
+## Inventory Files per each environment we want to use we need to declare the host that live at that environment. There is options not cover here to do upadte these fiels dinamically, getting this information from VMWare or DNS
 
 ### Development
 
@@ -232,7 +242,7 @@ app_destination: C:\test\app
 app_destination: C:\prod\app
 ```
 
-## How to Use
+## How to Use to deploy the same app in different environment taking in consideration posiible differences by variables
 
 1. **Clone the Repository**:
    ```sh
@@ -264,7 +274,7 @@ app_destination: C:\prod\app
      ansible-playbook -i inventory/development.ini playbooks/deploy_app.yml -e "ansible_environment=development"
      ```
 
-## Documentation Links
+## Modules would you typically use to manage windows
 
 - win_service https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
 - win_feature https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_feature_module.html
@@ -272,3 +282,4 @@ app_destination: C:\prod\app
 - win_copy https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_copy_module.html
 - win_template https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_template_module.html
 ```
+# 2. Windows Server Monitoring
