@@ -265,9 +265,9 @@ app_destination: C:\prod\app
 
 ## Documentation Links
 
-- win_service
-- win_feature
-- win_shell
-- win_copy
-- win_template
+- win_service https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
+- win_feature https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_feature_module.html
+- win_shell https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_shell_module.html
+- win_copy https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_copy_module.html
+- win_template https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_template_module.html
 ```
