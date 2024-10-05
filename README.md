@@ -184,7 +184,8 @@ It also covers deploying a sample application and registering it as a service wi
       # Documentation: https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
 ```
 
-## Inventory Files per each environment we want to use we need to declare the host that live at that environment. There is options not cover here to do upadte these fiels dinamically, getting this information from VMWare or DNS
+## Inventory Files per each environment we want to use we need to declare the host that live at that environment.
+There is options not cover here to do update these files dinamically, getting this information from VMWare or DNS
 
 ### Development
 
