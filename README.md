@@ -1,8 +1,15 @@
-# win-ansible-play
-Playing with Ansible and Windows
-Ansible Windows Services Management
-Overview
-This project demonstrates how to use Ansible to manage Windows services across multiple servers, including IIS (Internet Information Services) and Windows Time Service (w32time). It also covers deploying a sample application and registering it as a service with environment-specific configurations.Folder Structure
+Sure! Here's the README content formatted for easy copying and pasting into a VI editor:
+
+```markdown
+# Ansible Windows Services Management
+
+## Overview
+
+This project demonstrates how to use Ansible to manage Windows services across multiple servers, including IIS (Internet Information Services) and Windows Time Service (w32time). It also covers deploying a sample application and registering it as a service with environment-specific configurations.
+
+## Folder Structure
+
+```
 ansible-windows-services/
 ├── ansible.cfg
 ├── inventory/
@@ -30,18 +37,7 @@ ansible-windows-services/
     ├── development.yml
     ├── testing.yml
     └── production.yml
-i
-# Ansible Windows Services Management
-
-## Overview
-
-This project demonstrates how to use Ansible to manage Windows services across multiple servers, including IIS (Internet Information Services) and Windows Time Service (w32time). It also covers deploying a sample application and registering it as a service with environment-specific configurations.
-
-## Folder Structure
-
-
-ansible-windows-services/ ├── ansible.cfg ├── inventory/ │ ├── development.ini │ ├── testing.ini │ └── production.ini ├── playbooks/ │ ├── install_iis.yml │ ├── manage_w32time.yml │ ├── deploy_app.yml │ └── service_management.yml ├── roles/ │ ├── iis/ │ │ └── tasks/ │ │ └── main.yml │ ├── w32time/ │ │ └── tasks/ │ │ └── main.yml │ └── app/ │ ├── tasks/ │ │ └── main.yml │ └── files/ │ └── app.exe └── vars/ ├── development.yml ├── testing.yml └── production.yml
-
+```
 
 ## Prerequisites
 
@@ -49,21 +45,29 @@ ansible-windows-services/ ├── ansible.cfg ├── inventory/ │ ├─�
    ```sh
    sudo apt-get update
    sudo apt-get install ansible
+   ```
 
-WinRM Configuration on Windows Servers: Run the following PowerShell script on each Windows server:
-winrm quickconfig -q
-winrm set winrm/config/service '@{AllowUnencrypted="true"}'
-winrm set winrm/config/service/auth '@{Basic="true"}'
-winrm set winrm/config/listener?Address=*+Transport=HTTP
-winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="1024"}'
+2. **WinRM Configuration on Windows Servers**: Run the following PowerShell script on each Windows server:
+   ```powershell
+   winrm quickconfig -q
+   winrm set winrm/config/service '@{AllowUnencrypted="true"}'
+   winrm set winrm/config/service/auth '@{Basic="true"}'
+   winrm set winrm/config/listener?Address=*+Transport=HTTP
+   winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="1024"}'
+   ```
 
-pywinrm: Install pywinrm on the control machine.
-pip install pywinrm
+3. **pywinrm**: Install pywinrm on the control machine.
+   ```sh
+   pip install pywinrm
+   ```
 
-Playbooks
-Install IIS
-File: playbooks/install_iis.yml
+## Playbooks
 
+### Install IIS
+
+**File**: `playbooks/install_iis.yml`
+
+```yaml
 - name: Install IIS
   hosts: windows
   tasks:
@@ -87,10 +91,13 @@ File: playbooks/install_iis.yml
         start_mode: auto
         state: started
       # Documentation: https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
+```
 
-Manage Windows Time Service
-File: playbooks/manage_w32time.yml
+### Manage Windows Time Service
 
+**File**: `playbooks/manage_w32time.yml`
+
+```yaml
 - name: Manage Windows Time Service
   hosts: windows
   tasks:
@@ -100,10 +107,13 @@ File: playbooks/manage_w32time.yml
         start_mode: auto
         state: started
       # Documentation: https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
+```
 
-Routine Service Management Tasks
-File: playbooks/service_management.yml
+### Routine Service Management Tasks
 
+**File**: `playbooks/service_management.yml`
+
+```yaml
 - name: Check IIS Service Status
   hosts: windows
   tasks:
@@ -139,10 +149,13 @@ File: playbooks/service_management.yml
         name: W3SVC
         state: restarted
       # Documentation: https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
+```
 
-Deploy Sample Application
-File: playbooks/deploy_app.yml
+### Deploy Sample Application
 
+**File**: `playbooks/deploy_app.yml`
+
+```yaml
 - name: Deploy Sample Application
   hosts: windows
   vars_files:
@@ -161,64 +174,103 @@ File: playbooks/deploy_app.yml
         start_mode: auto
         state: started
       # Documentation: https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
+```
 
-Inventory Files
-Development
-File: inventory/development.ini
+## Inventory Files
 
+### Development
+
+**File**: `inventory/development.ini`
+
+```ini
 [development]
 dev_server1 ansible_host=dev1.example.com
 dev_server2 ansible_host=dev2.example.com
+```
 
-Testing
-File: inventory/testing.ini
+### Testing
 
+**File**: `inventory/testing.ini`
+
+```ini
 [testing]
 test_server1 ansible_host=test1.example.com
 test_server2 ansible_host=test2.example.com
+```
 
-Production
-File: inventory/production.ini
+### Production
 
+**File**: `inventory/production.ini`
+
+```ini
 [production]
 prod_server1 ansible_host=prod1.example.com
 prod_server2 ansible_host=prod2.example.com
+```
 
-Environment Variables
-Development
-File: vars/development.yml
+## Environment Variables
 
+### Development
+
+**File**: `vars/development.yml`
+
+```yaml
 app_destination: C:\dev\app
+```
 
-Testing
-File: vars/testing.yml
+### Testing
 
+**File**: `vars/testing.yml`
+
+```yaml
 app_destination: C:\test\app
+```
 
-Production
-File: vars/production.yml
+### Production
 
+**File**: `vars/production.yml`
+
+```yaml
 app_destination: C:\prod\app
+```
 
-How to Use
-Clone the Repository:
-git clone https://github.com/Vidanez/win-ansible-play.git
-cd win-ansible-play
+## How to Use
 
-Set Up Inventory Files: Update the inventory/development.ini, inventory/testing.ini, and inventory/production.ini files with your server details.
+1. **Clone the Repository**:
+   ```sh
+   git clone https://github.com/Vidanez/win-ansible-play.git
+   cd win-ansible-play
+   ```
 
-Run Playbooks:
-Install IIS:
-ansible-playbook -i inventory/development.ini playbooks/install_iis.yml
+2. **Set Up Inventory Files**:
+   Update the `inventory/development.ini`, `inventory/testing.ini`, and `inventory/production.ini` files with your server details.
 
-Manage Windows Time Service:
-ansible-playbook -i inventory/development.ini playbooks/manage_w32time.yml
+3. **Run Playbooks**:
+   - **Install IIS**:
+     ```sh
+     ansible-playbook -i inventory/development.ini playbooks/install_iis.yml
+     ```
 
-Routine Service Management:
-ansible-playbook -i inventory/development.ini playbooks/service_management.yml
+   - **Manage Windows Time Service**:
+     ```sh
+     ansible-playbook -i inventory/development.ini playbooks/manage_w32time.yml
+     ```
 
-Deploy Sample Application:
-ansible-playbook -i inventory/development.ini playbooks/deploy_app.yml -e "ansible_environment=development"
+   - **Routine Service Management**:
+     ```sh
+     ansible-playbook -i inventory/development.ini playbooks/service_management.yml
+     ```
 
-Documentation Links
-Playing with Ansible and Windows
+   - **Deploy Sample Application**:
+     ```sh
+     ansible-playbook -i inventory/development.ini playbooks/deploy_app.yml -e "ansible_environment=development"
+     ```
+
+## Documentation Links
+
+- win_service
+- win_feature
+- win_shell
+- win_copy
+- win_template
+```
