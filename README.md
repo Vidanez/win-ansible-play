@@ -137,18 +137,19 @@ Usage:
 **File**: `playbooks/manage_service.yml`
 
 **Usage:**
-     - Dynamic Targeting: By using the target_server variable, you can dynamically specify which server or group of servers to target even using word all for managing services.
-     
+    
      - Service Selection: The service_name variable allows you to choose which service to manage.
      
      - Tags: The tags (check, start, stop, restart) allow you to run specific tasks within the playbook.
+
+     - Dynamic Targeting: By using the target_server variable, you can dynamically specify which server or group of servers to target even using word all for managing services.
 
      
   ```sh
     ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "VARIABLE" -e "target_server=VARIABLE" -e "service_name=VARIABLE"
   ```
 
-### Deploy Sample Application
+### Deploy a Sample Application from a git repository defined in varibles
 
 **File**: `playbooks/deploy_app.yml`
 
@@ -229,13 +230,15 @@ Example for Production Environment
   ```
 
 **Explanation**
-    - Environment Variables: The environment-specific variables are defined in separate files (development.yml, testing.yml, production.yml) under the vars directory. These include the Git repository URL and the application path.
-
+    
     - Role: The deploy_app role handles cloning the application repository from Git and registering the application as a service.
     
     - Playbook: The playbook deploy_app.yml includes the deploy_app role and loads the environment-specific variables.
     
     - Running the Playbook: The playbook is run with the environment variable file passed as an extra variable.
+    
+    - Environment Variables: The environment-specific variables are defined in separate files (development.yml, testing.yml, production.yml) under the vars directory. These include the Git repository URL and the application path.
+    
 This setup ensures that the application is pulled from the specified Git repository and deployed with environment-specific configurations. If you have any more questions or need further assistance, feel free to ask!
 
 
@@ -247,6 +250,8 @@ https://docs.ansible.com/ansible/devel//os_guide/intro_windows.html#which-module
 - win_shell https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_shell_module.html
 - win_copy https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_copy_module.html
 - win_template https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_template_module.html
+
+
 
 # 2. Windows Server Monitoring
 The usual things to monitor in a machine not taking in consideration the virtualization layer where it is running are:
