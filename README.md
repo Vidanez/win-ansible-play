@@ -89,33 +89,30 @@ Historically Ansible used Windows Remote Management (WinRM) as the connection pr
 **File**: `playbooks/install_iis.yml`
 
 Usage:
-ansible-playbook -i inventory/development playbooks/install_iis.yml -e @vars/development.yml
-ansible-playbook -i inventory/testing playbooks/install_iis.yml -e @vars/testing.yml
-ansible-playbook -i inventory/production playbooks/install_iis.yml -e @vars/production.yml
+`ansible-playbook -i inventory/development playbooks/install_iis.yml -e @vars/development.yml`
+`ansible-playbook -i inventory/testing playbooks/install_iis.yml -e @vars/testing.yml`
+`ansible-playbook -i inventory/production playbooks/install_iis.yml -e @vars/production.yml`
 
 ### Install Windows Time Service
 
 **File**: `playbooks/install_w32time.yml`
 
 Usage:
-ansible-playbook -i inventory/development playbooks/install_w32time.yml
-ansible-playbook -i inventory/testing playbooks/install_w32time.yml
-ansible-playbook -i inventory/production playbooks/install_w32time.yml
+`ansible-playbook -i inventory/development playbooks/install_w32time.yml`
+`ansible-playbook -i inventory/testing playbooks/install_w32time.yml`
+`ansible-playbook -i inventory/production playbooks/install_w32time.yml`
 
 ### Routine Service Management Tasks check status, start, stop and restart
 
 **File**: `playbooks/manage_service.yml`
 
 Usage:
-Check status on all << environment >> or servers << service name>>
+Dynamic Targeting: By using the target_server variable, you can dynamically specify which server or group of servers to target for managing services.
+Service Selection: The service_name variable allows you to choose which service to manage.
+Tags: The tags (check, start, stop, restart) allow you to run specific tasks within the playbook.
 
-ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "check" -e "target_server=production" -e "service_name=<<service name>>"
+`ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "VARIABLE" -e "target_server=VARIABLE" -e "service_name=VARIABLE"`
 
-Start Stop Restart service at servers
-Just change 
---tags "start" 
---tags "stop"
---tags "restart"
 
 
 
