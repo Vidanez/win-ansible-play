@@ -43,8 +43,19 @@ ansible-windows-services/
 ## Overview
 
 This project demonstrates how to use Ansible to install, configure, and start a Windows service across multiple servers.
-In this example services with parameters IIS (Internet Information Services) and without parameters Windows Time Service (w32time).
+In this example services with inputs parameters IIS (Internet Information Services) and without inputs parameters Windows Time Service (w32time).
 It also covers deploying a sample application and registering it as a service with environment-specific configurations.
+
+## About WinRM in the latest version of Ansible:
+WinRM is a management protocol used by Windows to remotely communicate with another server. It is a SOAP-based protocol that communicates over HTTP/HTTPS and is included in all recent Windows operating systems. Since Windows Server 2012, WinRM has been enabled by default, but in most cases, extra configuration is required to use WinRM with Ansible.
+Historically Ansible used Windows Remote Management (WinRM) as the connection protocol to manage Windows nodes. The psrp and winrm connection plugins both operate over WinRM and can be used as the connection plugin for Windows nodes. The psrp connection plugin is a newer connection plugin that offers a few benefits over the winrm connection plugin, for example:
+  -Can be slightly faster
+  -Less susceptible to timeout issues when the Windows node is under load
+  -Better support for proxy servers
+
+   https://docs.ansible.com/ansible/devel//os_guide/intro_windows.html
+   https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html
+Note: SSH is also available   
 
 ## Prerequisites
 
@@ -58,8 +69,8 @@ It also covers deploying a sample application and registering it as a service wi
    pip install pywinrm
    ```
 
-2. **WinRM Configuration on Windows Servers**: Run the following PowerShell script on each Windows server:
-   https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html
+3. **WinRM Configuration on Windows Servers**: Run the following PowerShell script on each Windows server to enable WinRM to basic
+  
    ```powershell
    winrm quickconfig -q
    winrm set winrm/config/service '@{AllowUnencrypted="true"}'
@@ -283,4 +294,5 @@ app_destination: C:\prod\app
 - win_copy https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_copy_module.html
 - win_template https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_template_module.html
 ```
-# 2. Windows Server Monitoring
+
+
