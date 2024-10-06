@@ -1,0 +1,13 @@
+---
+- name: Clone the application repository
+  ansible.builtin.git:
+    repo: "{{ git_repo }}"
+    dest: "{{ app_path }}"
+    version: HEAD
+
+- name: Register application as a service
+  ansible.windows.win_service:
+    name: "{{ site_name }}"
+    path: "{{ app_path }}\\app.exe"
+    start_mode: auto
+    state: started

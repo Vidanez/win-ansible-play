@@ -1,0 +1,12 @@
+---
+- name: Install Packages and Start Services from List
+  hosts: "{{ target_hosts | default('all') }}"
+  vars_files:
+    - vars/{{ env }}.yml
+    - vars/{{ env }}_packages.yml
+  roles:
+    - role: install_packages
+    - role: manage_services
+      when: item.service_name is defined
+      vars:
+        service_name: "{{ item.service_name }}"
