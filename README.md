@@ -8,25 +8,44 @@
 ## Folder Structure for all points
 
 ```
-ansible-windows-services/
-├── ansible.cfg
-├── inventory/
-├── playbooks/
-│   ├── install_iis.yml
-│   ├── install_w32time.yml
-│   ├── deploy_app.yml
-│   └── manage_service.yml
-├── roles/
-│   ├── iis/
-│   │   └── tasks/      
-│   ├── w32time/
-│   │   └── tasks/
-│   └── app/
-│       ├── tasks/
-│       └── files/
-└── vars/
-
-    
+├── LICENSE
+├── README.md
+└── ansible-windows-services
+    ├── inventory
+    │   ├── development
+    │   ├── production
+    │   └── testing
+    ├── playbooks
+    │   ├── deploy_app.yml
+    │   ├── install_and_start_services.yml
+    │   ├── install_iis.yml
+    │   ├── install_packages.yml
+    │   ├── install_w32time.yml
+    │   └── manage_service.yml
+    ├── roles
+    │   ├── deploy_app
+    │   │   ├── tasks
+    │   │   │   └── main.yml
+    │   │   └── vars
+    │   │       └── main.yml
+    │   ├── iis
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── install_packages
+    │   │   ├── tasks
+    │   │   │   └── main.yml
+    │   │   └── vars
+    │   │       └── main.yml
+    │   ├── manage_services
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   └── w32time
+    │       └── tasks
+    │           └── main.yml
+    └── vars
+        ├── development.yml
+        ├── production.yml
+        └── testing.yml
 ```
 
 
@@ -83,11 +102,17 @@ Historically Ansible used Windows Remote Management (WinRM) as the connection pr
 
 **Usage:**:
   ```sh
-   ansible-playbook -i inventory/development playbooks/install_iis.yml -e @vars/development.yml```
+   ansible-playbook -i inventory/development playbooks/install_iis.yml -e @vars/development.yml
+  ```
+
   ```sh
-   ansible-playbook -i inventory/testing playbooks/install_iis.yml -e @vars/testing.yml```
+   ansible-playbook -i inventory/testing playbooks/install_iis.yml -e @vars/testing.yml
+  ```
+
   ```sh
-   ansible-playbook -i inventory/production playbooks/install_iis.yml -e @vars/production.yml```
+   ansible-playbook -i inventory/production playbooks/install_iis.yml -e @vars/production.yml
+  ```
+
 
 ### Install Windows Time Service (without parameters)
 
@@ -95,11 +120,17 @@ Historically Ansible used Windows Remote Management (WinRM) as the connection pr
 
 Usage:
   ```sh
-    ansible-playbook -i inventory/development playbooks/install_w32time.yml```
+    ansible-playbook -i inventory/development playbooks/install_w32time.yml
+  ```
+
   ```sh
-    ansible-playbook -i inventory/testing playbooks/install_w32time.yml```
+    ansible-playbook -i inventory/testing playbooks/install_w32time.yml
+  ```
+
   ```sh
-    ansible-playbook -i inventory/production playbooks/install_w32time.yml```
+    ansible-playbook -i inventory/production playbooks/install_w32time.yml
+  ```
+
 
 ### Routine Service Management Tasks check status, start, stop and restart
 
@@ -111,10 +142,8 @@ Usage:
  Service Selection: The service_name variable allows you to choose which service to manage.
  Tags: The tags (check, start, stop, restart) allow you to run specific tasks within the playbook.
   ```sh
-    ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "VARIABLE" -e "target_server=VARIABLE" -e "service_name=VARIABLE"```
-
-
-
+    ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "VARIABLE" -e "target_server=VARIABLE" -e "service_name=VARIABLE"
+  ```
 
 ### Deploy Sample Application
 
@@ -122,11 +151,14 @@ Usage:
 
 **Usage:**
   ```sh
-    ansible-playbook -i inventory/development playbooks/deploy_app.yml -e @vars/development.yml```
+    ansible-playbook -i inventory/development playbooks/deploy_app.yml -e @vars/development.yml
+  ```
   ```sh
-    ansible-playbook -i inventory/testing playbooks/deploy_app.yml -e @vars/testing.yml```
+    ansible-playbook -i inventory/testing playbooks/deploy_app.yml -e @vars/testing.yml
+  ```
   ```sh
-    ansible-playbook -i inventory/production playbooks/deploy_app.yml -e @vars/production.yml```
+    ansible-playbook -i inventory/production playbooks/deploy_app.yml -e @vars/production.yml
+  ```
 
 
 ## Inventory Files per each environment we want to use we need to declare the host that live at that environment.
@@ -172,22 +204,26 @@ There is options not cover here to do update these files dinamically, getting th
    git clone https://github.com/Vidanez/win-ansible-play.git
    cd win-ansible-play
    ```
+   
 2. **Set Up Inventory Files:**
    Update the `inventory/development`, `inventory/testing`, and `inventory/production` files with your server details.
 
 3. **Example for install an app:**
 
 Example for Development Environment
-   ```sh
-      ansible-playbook -i inventory/development playbooks/deploy_app.yml -e "env=development"```
+  ```sh
+     ansible-playbook -i inventory/development playbooks/deploy_app.yml -e "env=development"
+  ```
 
 Example for Testing Environment
-   ```sh
-      ansible-playbook -i inventory/testing playbooks/deploy_app.yml -e "env=testing"```
+  ```sh
+     ansible-playbook -i inventory/testing playbooks/deploy_app.yml -e "env=testing"
+  ```
 
 Example for Production Environment
-   ```sh
-      ansible-playbook -i inventory/production playbooks/deploy_app.yml -e "env=production"```
+  ```sh
+     ansible-playbook -i inventory/production playbooks/deploy_app.yml -e "env=production"
+  ```
 
 **Explanation**
     - Environment Variables: The environment-specific variables are defined in       separate files (development.yml, testing.yml, production.yml) under the vars directory. These include the Git repository URL and the application path.
