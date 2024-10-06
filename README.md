@@ -35,8 +35,9 @@ ansible-windows-services/
 ## Overview
 
 This project demonstrates how to use Ansible to install, configure, and start a Windows service across multiple servers.
-In this example we will use service with inputs parameters IIS (Internet Information Services) and without inputs parameters Windows Time Service (w32time).
-It also covers deploying a sample application and registering it as a service with environment-specific configurations.
+In this example we will use service with inputs parameters IIS (Internet Information Services) and without inputs parameters Windows Time Service (w32time). 
+I'm keeping it easy and not using ansible-galaxy and focusing into those 2 service as example. We could change it to do it from a list in a loop easily to install or remove a list of files and use bigger jinja templates to control variables and complicate installations
+It also covers deploying a sample application and registering it as a service with environment-specific configurations, pulling it from GIT.
 
 ## About WinRM in the latest version of Ansible:
 WinRM is a management protocol used by Windows to remotely communicate with another server. It is a SOAP-based protocol that communicates over HTTP/HTTPS and is included in all recent Windows operating systems. Since Windows Server 2012, WinRM has been enabled by default, but in most cases, extra configuration is required to use WinRM with Ansible.
@@ -51,7 +52,7 @@ Historically Ansible used Windows Remote Management (WinRM) as the connection pr
    
    Note: SSH is also available   
 
-## Prerequisites
+## Prerequisites in this easy example
 
 1. **Ansible**: Install Ansible on your control machine from where we will run the playbooks.
    ```sh
@@ -63,7 +64,7 @@ Historically Ansible used Windows Remote Management (WinRM) as the connection pr
    pip install pywinrm
    ```
 
-3. **WinRM Configuration on Windows Servers**: Run the following PowerShell script on each Windows server to enable WinRM to basic
+3. **WinRM Configuration on Windows Servers**: Run the following PowerShell script on each Windows server to enable WinRM basic by HTTP and easy configuration username/password.
   
    ```powershell
    winrm quickconfig -q
@@ -80,7 +81,7 @@ Historically Ansible used Windows Remote Management (WinRM) as the connection pr
 
 **File**: `playbooks/install_iis.yml`
 
-Usage:
+**Usage:**:
   `ansible-playbook -i inventory/development playbooks/install_iis.yml -e @vars/development.yml`
   `ansible-playbook -i inventory/testing playbooks/install_iis.yml -e @vars/testing.yml`
   `ansible-playbook -i inventory/production playbooks/install_iis.yml -e @vars/production.yml`
@@ -98,7 +99,7 @@ Usage:
 
 **File**: `playbooks/manage_service.yml`
 
-Usage:
+**Usage:**
  Dynamic Targeting: By using the target_server variable, you can dynamically specify which server or group of servers to target 
  for managing services.
  Service Selection: The service_name variable allows you to choose which service to manage.
@@ -113,23 +114,28 @@ Usage:
 
 **File**: `playbooks/deploy_app.yml`
 
+**Usage:**
+ `ansible-playbook -i inventory/development playbooks/deploy_app.yml -e @vars/development.yml`
+ `ansible-playbook -i inventory/testing playbooks/deploy_app.yml -e @vars/testing.yml`
+ `ansible-playbook -i inventory/production playbooks/deploy_app.yml -e @vars/production.yml`
+
 
 ## Inventory Files per each environment we want to use we need to declare the host that live at that environment.
 There is options not cover here to do update these files dinamically, getting this information from VMWare or DNS
 
 ### Development
 
-**File**: `inventory/development.ini`
+**File**: `inventory/development`
 
 
 ### Testing
 
-**File**: `inventory/testing.ini`
+**File**: `inventory/testing`
 
 
 ### Production
 
-**File**: `inventory/production.ini`
+**File**: `inventory/production`
 
 
 ## Environment Variables
@@ -149,7 +155,7 @@ There is options not cover here to do update these files dinamically, getting th
 **File**: `vars/production.yml`
 
 
-## How to Use to deploy the same app in different environment taking in consideration posiible differences by variables
+## How to Use to deploy the same app in different environment taking in consideration posible differences by variables
 
 1. **Clone the Repository**:
    ```sh
@@ -158,27 +164,27 @@ There is options not cover here to do update these files dinamically, getting th
    ```
 
 2. **Set Up Inventory Files**:
-   Update the `inventory/development.ini`, `inventory/testing.ini`, and `inventory/production.ini` files with your server details.
+   Update the `inventory/development`, `inventory/testing`, and `inventory/production` files with your server details.
 
 3. **Run Playbooks**:
    - **Install IIS**:
      ```sh
-     ansible-playbook -i inventory/development.ini playbooks/install_iis.yml
+     ansible-playbook -i inventory/development playbooks/install_iis.yml
      ```
 
    - **Manage Windows Time Service**:
      ```sh
-     ansible-playbook -i inventory/development.ini playbooks/manage_w32time.yml
+     ansible-playbook -i inventory/development playbooks/manage_w32time.yml
      ```
 
    - **Routine Service Management**:
      ```sh
-     ansible-playbook -i inventory/development.ini playbooks/service_management.yml
+     ansible-playbook -i inventory/development playbooks/service_management.yml
      ```
 
    - **Deploy Sample Application**:
      ```sh
-     ansible-playbook -i inventory/development.ini playbooks/deploy_app.yml -e "ansible_environment=development"
+     ansible-playbook -i inventory/development playbooks/deploy_app.yml -e "ansible_environment=development"
      ```
 
 ## Modules would you typically use to manage windows
