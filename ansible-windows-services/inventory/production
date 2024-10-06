@@ -1,0 +1,2 @@
+[production]
+prod-server1 ansible_host=192.168.1.30 ansible_user=Administrator ansible_password=YourPassword ansible_connection=winrm

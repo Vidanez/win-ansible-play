@@ -1,0 +1,13 @@
+---
+- name: Install Packages from List
+  hosts: all
+  vars_files:
+    - "{{ package_list }}"
+  tasks:
+    - name: Install packages using Chocolatey
+      chocolatey.chocolatey.win_chocolatey:
+        name: "{{ item.name }}"
+        state: present
+        version: "{{ item.version | default(omit) }}"
+        source: "{{ item.source | default(omit) }}"
+      loop: "{{ packages }}"
