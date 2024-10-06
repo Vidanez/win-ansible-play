@@ -268,7 +268,7 @@ We have several options to create a virtual machine at VMWare from directly clic
 Using templates (Vms can be transform in templates) we can deploy templates direclyt in the GUI, using content library, using powercli and using API.
 In order to automate the best aproach is to do it using templates. The VM approach is available but has the tendency to complicate things and we need to keep KISS approach. 
 
-ISSUE using Ansible to deploy VMs. One of the thing that happens is that if we use ansible to deploy from template it use the clone feature and not the deploy so this limit the new VM to be create only in the same datastore cluster where the template is located.
+ISSUE using Ansible to deploy VMs. One of the thing that happens is that if we use ansible to deploy from template it use the "clone" feature and not the "deploy from template" feature, so this apply a limit the new VMs to be create only in the same datastore cluster where the template is located.
 
 10 Years ago I created this code https://github.com/Vidanez/DeployVMs/tree/master that is still valid to deploy VMs in bulk not cloning but deploying from template.
 
