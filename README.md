@@ -84,17 +84,40 @@ Historically Ansible used Windows Remote Management (WinRM) as the connection pr
 
 ## Playbooks
 
-### Install IIS
+### Install IIS (With parameters)
 
 **File**: `playbooks/install_iis.yml`
 
-### Manage Windows Time Service
+Usage:
+ansible-playbook -i inventory/development playbooks/install_iis.yml -e @vars/development.yml
+ansible-playbook -i inventory/testing playbooks/install_iis.yml -e @vars/testing.yml
+ansible-playbook -i inventory/production playbooks/install_iis.yml -e @vars/production.yml
 
-**File**: `playbooks/manage_w32time.yml`
+### Install Windows Time Service
+
+**File**: `playbooks/install_w32time.yml`
+
+Usage:
+ansible-playbook -i inventory/development playbooks/install_w32time.yml
+ansible-playbook -i inventory/testing playbooks/install_w32time.yml
+ansible-playbook -i inventory/production playbooks/install_w32time.yml
 
 ### Routine Service Management Tasks check status, start, stop and restart
 
-**File**: `playbooks/service_management.yml`
+**File**: `playbooks/manage_service.yml`
+
+Usage:
+Check status on all << environment >> or servers << service name>>
+
+ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "check" -e "target_server=production" -e "service_name=<<service name>>"
+
+Start Stop Restart service at servers
+Just change 
+--tags "start" 
+--tags "stop"
+--tags "restart"
+
+
 
 ### Deploy Sample Application
 
@@ -175,6 +198,20 @@ There is options not cover here to do update these files dinamically, getting th
 - win_shell https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_shell_module.html
 - win_copy https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_copy_module.html
 - win_template https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_template_module.html
-```
+
+# 2. Windows Server Monitoring
+
+# 3. VMWare
+
+We have several options to create a virtual machine at VMWare from directly clicking in the bottom of the GUI (vcenter and ESXi), by a OVF or OVA (export /import), by and script in powercli, by the vcenter API or as part of a vRealise Automation.  
+Using templates (Vms can be transform in templates) we can deploy templates direclyt in the GUI, using content library, using powercli and using API.
+In order to automate the best aproach is to do it using templates. The VM approach is available but has the tendency to complicate things and we need to keep KISS approach. 
+
+ISSUE using Ansible to deploy VMs. One of the thing that happens is that if we use ansible to deploy from template it use the clone feature and not the deploy so this limit the new VM to be create only in the same datastore cluster where the template is located.
+
+10 Years ago I created this code https://github.com/Vidanez/DeployVMs/tree/master that is still valid to deploy VMs in bulk not cloning but deploying from template.
 
 
+# 4. Windows Updates Management
+
+# 5. Antivirus Management 
