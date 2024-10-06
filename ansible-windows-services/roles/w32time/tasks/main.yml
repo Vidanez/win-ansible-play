@@ -1,0 +1,11 @@
+---
+- name: Install Windows Time Service using Chocolatey
+  chocolatey.chocolatey.win_chocolatey:
+    name: w32time
+    state: present
+
+- name: Start Windows Time Service
+  ansible.windows.win_service:
+    name: w32time
+    start_mode: auto
+    state: started

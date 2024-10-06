@@ -1,0 +1,16 @@
+---
+- name: Install IIS using Chocolatey
+  chocolatey.chocolatey.win_chocolatey:
+    name: IIS
+    state: present
+
+- name: Configure IIS
+  ansible.windows.win_iis_website:
+    name: "{{ site_name }}"
+    state: started
+    physical_path: "{{ site_path }}"
+    bindings:
+      - protocol: http
+        port: "{{ site_port }}"
+        ip: '*'
+        hostname: "{{ site_hostname }}"

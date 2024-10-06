@@ -1,0 +1,5 @@
+---
+- name: Install and Configure IIS
+  hosts: iis
+  roles:
+    - iis

@@ -1,0 +1,6 @@
+---
+- name: Install Windows Time Service
+  hosts: time
+  roles:
+    - w32time
+

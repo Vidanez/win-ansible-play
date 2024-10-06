@@ -1,0 +1,27 @@
+---
+- name: Manage Windows Service
+  hosts: "{{ target_server }}"
+  tasks:
+    - name: Check service status
+      ansible.windows.win_service_info:
+        name: "{{ service_name }}"
+      register: service_info
+      tags: check
+
+    - name: Start service
+      ansible.windows.win_service:
+        name: "{{ service_name }}"
+        state: started
+      tags: start
+
+    - name: Stop service
+      ansible.windows.win_service:
+        name: "{{ service_name }}"
+        state: stopped
+      tags: stop
+
+    - name: Restart service
+      ansible.windows.win_service:
+        name: "{{ service_name }}"
+        state: restarted
+      tags: restart

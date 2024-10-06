@@ -1,0 +1,4 @@
+site_name: "DevWebsite"
+site_path: "C:\\inetpub\\wwwroot"
+site_hostname: "dev.local"
+site_port: "80"

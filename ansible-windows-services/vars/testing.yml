@@ -1,0 +1,4 @@
+site_name: "TestWebsite"
+site_path: "C:\\inetpub\\wwwroot"
+site_hostname: "test.local"
+site_port: "80"
