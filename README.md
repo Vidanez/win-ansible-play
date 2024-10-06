@@ -82,30 +82,36 @@ Historically Ansible used Windows Remote Management (WinRM) as the connection pr
 **File**: `playbooks/install_iis.yml`
 
 **Usage:**:
-  `ansible-playbook -i inventory/development playbooks/install_iis.yml -e @vars/development.yml`
-  `ansible-playbook -i inventory/testing playbooks/install_iis.yml -e @vars/testing.yml`
-  `ansible-playbook -i inventory/production playbooks/install_iis.yml -e @vars/production.yml`
+  ```sh
+   ansible-playbook -i inventory/development playbooks/install_iis.yml -e @vars/development.yml```
+  ```sh
+   ansible-playbook -i inventory/testing playbooks/install_iis.yml -e @vars/testing.yml```
+  ```sh
+   ansible-playbook -i inventory/production playbooks/install_iis.yml -e @vars/production.yml```
 
 ### Install Windows Time Service (without parameters)
 
 **File**: `playbooks/install_w32time.yml`
 
 Usage:
-  `ansible-playbook -i inventory/development playbooks/install_w32time.yml`
-  `ansible-playbook -i inventory/testing playbooks/install_w32time.yml`
-  `ansible-playbook -i inventory/production playbooks/install_w32time.yml`
+  ```sh
+    ansible-playbook -i inventory/development playbooks/install_w32time.yml```
+  ```sh
+    ansible-playbook -i inventory/testing playbooks/install_w32time.yml```
+  ```sh
+    ansible-playbook -i inventory/production playbooks/install_w32time.yml```
 
 ### Routine Service Management Tasks check status, start, stop and restart
 
 **File**: `playbooks/manage_service.yml`
 
 **Usage:**
- Dynamic Targeting: By using the target_server variable, you can dynamically specify which server or group of servers to target 
+ Dynamic Targeting: By using the target_server variable, you can dynamically specify which server or group of servers to target even using word all 
  for managing services.
  Service Selection: The service_name variable allows you to choose which service to manage.
  Tags: The tags (check, start, stop, restart) allow you to run specific tasks within the playbook.
-
-  `ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "VARIABLE" -e "target_server=VARIABLE" -e "service_name=VARIABLE"`
+  ```sh
+    ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "VARIABLE" -e "target_server=VARIABLE" -e "service_name=VARIABLE"```
 
 
 
@@ -115,9 +121,12 @@ Usage:
 **File**: `playbooks/deploy_app.yml`
 
 **Usage:**
- `ansible-playbook -i inventory/development playbooks/deploy_app.yml -e @vars/development.yml`
- `ansible-playbook -i inventory/testing playbooks/deploy_app.yml -e @vars/testing.yml`
- `ansible-playbook -i inventory/production playbooks/deploy_app.yml -e @vars/production.yml`
+  ```sh
+    ansible-playbook -i inventory/development playbooks/deploy_app.yml -e @vars/development.yml```
+  ```sh
+    ansible-playbook -i inventory/testing playbooks/deploy_app.yml -e @vars/testing.yml```
+  ```sh
+    ansible-playbook -i inventory/production playbooks/deploy_app.yml -e @vars/production.yml```
 
 
 ## Inventory Files per each environment we want to use we need to declare the host that live at that environment.
@@ -157,37 +166,40 @@ There is options not cover here to do update these files dinamically, getting th
 
 ## How to Use to deploy the same app in different environment taking in consideration posible differences by variables
 
-1. **Clone the Repository**:
+1. **Clone the ansible repo:**
+
    ```sh
    git clone https://github.com/Vidanez/win-ansible-play.git
    cd win-ansible-play
    ```
-
-2. **Set Up Inventory Files**:
+2. **Set Up Inventory Files:**
    Update the `inventory/development`, `inventory/testing`, and `inventory/production` files with your server details.
 
-3. **Run Playbooks**:
-   - **Install IIS**:
-     ```sh
-     ansible-playbook -i inventory/development playbooks/install_iis.yml
-     ```
+3. **Example for install an app:**
 
-   - **Manage Windows Time Service**:
-     ```sh
-     ansible-playbook -i inventory/development playbooks/manage_w32time.yml
-     ```
+Example for Development Environment
+   ```sh
+      ansible-playbook -i inventory/development playbooks/deploy_app.yml -e "env=development"```
 
-   - **Routine Service Management**:
-     ```sh
-     ansible-playbook -i inventory/development playbooks/service_management.yml
-     ```
+Example for Testing Environment
+   ```sh
+      ansible-playbook -i inventory/testing playbooks/deploy_app.yml -e "env=testing"```
 
-   - **Deploy Sample Application**:
-     ```sh
-     ansible-playbook -i inventory/development playbooks/deploy_app.yml -e "ansible_environment=development"
-     ```
+Example for Production Environment
+   ```sh
+      ansible-playbook -i inventory/production playbooks/deploy_app.yml -e "env=production"```
+
+**Explanation**
+    - Environment Variables: The environment-specific variables are defined in       separate files (development.yml, testing.yml, production.yml) under the vars directory. These include the Git repository URL and the application path.
+
+    - Role: The deploy_app role handles cloning the application repository from Git and registering the application as a service.
+Playbook: The playbook deploy_app.yml includes the deploy_app role and loads the environment-specific variables.
+    - Running the Playbook: The playbook is run with the environment variable file passed as an extra variable.
+This setup ensures that the application is pulled from the specified Git repository and deployed with environment-specific configurations. If you have any more questions or need further assistance, feel free to ask!
+
 
 ## Modules would you typically use to manage windows
+https://docs.ansible.com/ansible/devel//os_guide/intro_windows.html#which-modules-are-available
 
 - win_service https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_service_module.html
 - win_feature https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_feature_module.html
@@ -196,6 +208,13 @@ There is options not cover here to do update these files dinamically, getting th
 - win_template https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_template_module.html
 
 # 2. Windows Server Monitoring
+The usual things to monitor in a machine not taking in consideration the virtualization layer where it is running are:
+    - CPU
+    - Memory
+    - Disk space and amoutn of IOPs
+    - Network bandwith outcome / Income. Based in the kind of netwrok itnereface we can easily detect exahustation of the device
+    - Network latency ( we needd to establish lacenty raange acceptable from/to external from the VM device consuming the sevices)  
+    - Services that we want to keep running
 
 # 3. VMWare
 
