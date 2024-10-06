@@ -256,12 +256,20 @@ https://docs.ansible.com/ansible/devel//os_guide/intro_windows.html#which-module
 # 2. Windows Server Monitoring
 The usual things to monitor in a machine not taking in consideration the virtualization layer where it is running are:
 
-- CPU
-- Memory
-- Disk space and amoutn of IOPs
-- Network bandwith outcome / Income. Based in the kind of netwrok itnereface we can easily detect exahustation of the device
-- Network latency ( we needd to establish lacenty raange acceptable from/to external from the VM device consuming the sevices)
+- CPU Usage
+- Memory Usage
+- Disk space Usage and amount of IOPs
+- Network bandwidth outcome / Income, Error rate, Throughput, packet loss and latency.
 - Services that we want to keep running
+
+We need to identify potential bottlenecks or failures, you should:
+- Establish Baselines: Determine normal performance levels for your metrics.
+- Monitor Trends: Look for deviations from the baseline.
+- Analyze Correlations: Identify relationships between different metrics (e.g., high CPU usage and increased latency).
+- Use Visualization Tools: Tools like Grafana can help visualize data and spot trends.
+- Set Thresholds and Alerts: Configure alerts for metrics that exceed predefined thresholds
+
+
 
 # 3. VMWare
 
