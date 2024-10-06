@@ -11,30 +11,22 @@
 ansible-windows-services/
 ├── ansible.cfg
 ├── inventory/
-│   ├── development.ini
-│   ├── testing.ini
-│   └── production.ini
 ├── playbooks/
 │   ├── install_iis.yml
-│   ├── manage_w32time.yml
+│   ├── install_w32time.yml
 │   ├── deploy_app.yml
-│   └── service_management.yml
+│   └── manage_service.yml
 ├── roles/
 │   ├── iis/
-│   │   └── tasks/
-│   │       └── main.yml
+│   │   └── tasks/      
 │   ├── w32time/
 │   │   └── tasks/
-│   │       └── main.yml
 │   └── app/
 │       ├── tasks/
-│       │   └── main.yml
 │       └── files/
-│           └── app.exe
 └── vars/
-    ├── development.yml
-    ├── testing.yml
-    └── production.yml
+
+    
 ```
 
 
