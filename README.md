@@ -1,4 +1,4 @@
-#This is a exercise to answer differents point of a list of 5
+# This is a exercise to answer differents point of a list of 5
 1. Ansible for Managing Windows Services
 2. Windows Server Monitoring
 3. VMWare
