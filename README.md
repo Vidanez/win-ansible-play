@@ -255,12 +255,13 @@ https://docs.ansible.com/ansible/devel//os_guide/intro_windows.html#which-module
 
 # 2. Windows Server Monitoring
 The usual things to monitor in a machine not taking in consideration the virtualization layer where it is running are:
-    - CPU
-    - Memory
-    - Disk space and amoutn of IOPs
-    - Network bandwith outcome / Income. Based in the kind of netwrok itnereface we can easily detect exahustation of the device
-    - Network latency ( we needd to establish lacenty raange acceptable from/to external from the VM device consuming the sevices)  
-    - Services that we want to keep running
+
+- CPU
+- Memory
+- Disk space and amoutn of IOPs
+- Network bandwith outcome / Income. Based in the kind of netwrok itnereface we can easily detect exahustation of the device
+- Network latency ( we needd to establish lacenty raange acceptable from/to external from the VM device consuming the sevices)
+- Services that we want to keep running
 
 # 3. VMWare
 
