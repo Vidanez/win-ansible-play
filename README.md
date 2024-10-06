@@ -137,10 +137,13 @@ Usage:
 **File**: `playbooks/manage_service.yml`
 
 **Usage:**
- Dynamic Targeting: By using the target_server variable, you can dynamically specify which server or group of servers to target even using word all 
- for managing services.
- Service Selection: The service_name variable allows you to choose which service to manage.
- Tags: The tags (check, start, stop, restart) allow you to run specific tasks within the playbook.
+     - Dynamic Targeting: By using the target_server variable, you can dynamically specify which server or group of servers to target even using word all for managing services.
+     
+     - Service Selection: The service_name variable allows you to choose which service to manage.
+     
+     - Tags: The tags (check, start, stop, restart) allow you to run specific tasks within the playbook.
+
+     
   ```sh
     ansible-playbook -i inventory/hosts playbooks/manage_service.yml --tags "VARIABLE" -e "target_server=VARIABLE" -e "service_name=VARIABLE"
   ```
@@ -226,10 +229,12 @@ Example for Production Environment
   ```
 
 **Explanation**
-    - Environment Variables: The environment-specific variables are defined in       separate files (development.yml, testing.yml, production.yml) under the vars directory. These include the Git repository URL and the application path.
+    - Environment Variables: The environment-specific variables are defined in separate files (development.yml, testing.yml, production.yml) under the vars directory. These include the Git repository URL and the application path.
 
     - Role: The deploy_app role handles cloning the application repository from Git and registering the application as a service.
-Playbook: The playbook deploy_app.yml includes the deploy_app role and loads the environment-specific variables.
+    
+    - Playbook: The playbook deploy_app.yml includes the deploy_app role and loads the environment-specific variables.
+    
     - Running the Playbook: The playbook is run with the environment variable file passed as an extra variable.
 This setup ensures that the application is pulled from the specified Git repository and deployed with environment-specific configurations. If you have any more questions or need further assistance, feel free to ask!
 
