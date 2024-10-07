@@ -1,0 +1,8 @@
+---
+- name: Install PSWindowsUpdate module using Chocolatey
+  win_chocolatey:
+    name: pswindowsupdate
+    state: present
+  register: pswindowsupdate_installed
+  notify:
+    - Notify PSWindowsUpdate installation

@@ -1,0 +1,4 @@
+---
+- name: Notify PSWindowsUpdate installation
+  debug:
+    msg: "PSWindowsUpdate module has been installed."

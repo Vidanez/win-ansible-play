@@ -1,0 +1,20 @@
+---
+- name: Run Windows Updates
+  hosts: windows
+  roles:
+    - role: run_windows_updates
+    - role: manage_services
+      vars:
+        service_name: "wuauserv"
+      tags: check
+
+  tasks:
+    - name: Send email if updates failed
+      win_shell: |
+        $logFile = "C:\\Windows\\Temp\\update_history.log"
+        $emailRecipient = "admin@example.com"
+        $emailSubject = "Windows Update Status"
+        $emailBody = Get-Content -Path $logFile
+        if ($emailBody -match "Failed updates:") {
+            Send-MailMessage -To $emailRecipient -From "noreply@example.com" -Subject $emailSubject -Body $emailBody -SmtpServer "smtp.example.com"
+      when: update_history is defined

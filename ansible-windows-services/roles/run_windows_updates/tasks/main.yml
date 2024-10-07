@@ -1,0 +1,22 @@
+---
+- name: Check for available updates
+  win_shell: |
+    Import-Module PSWindowsUpdate
+    Get-WindowsUpdate -AcceptAll -IgnoreReboot
+  register: available_updates
+
+- name: Install updates
+  win_shell: |
+    Import-Module PSWindowsUpdate
+    Install-WindowsUpdate -AcceptAll -IgnoreReboot -AutoReboot
+  register: update_result
+  notify:
+    - Check update status
+
+- name: Get update history
+  win_shell: |
+    Import-Module PSWindowsUpdate
+    Get-WindowsUpdateLog
+  register: update_history
+  notify:
+    - Log update history

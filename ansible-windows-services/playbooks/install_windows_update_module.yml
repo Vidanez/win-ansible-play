@@ -1,0 +1,5 @@
+---
+- name: Install PSWindowsUpdate Module
+  hosts: windows
+  roles:
+    - role: install_windows_update_module

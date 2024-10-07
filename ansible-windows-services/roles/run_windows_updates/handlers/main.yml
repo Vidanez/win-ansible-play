@@ -1,0 +1,28 @@
+---
+- name: Check update status
+  win_shell: |
+    Import-Module PSWindowsUpdate
+    $updateHistory = Get-WindowsUpdateLog
+    $successfulUpdates = $updateHistory | Where-Object { $_.Result -eq 'Succeeded' }
+    $failedUpdates = $updateHistory | Where-Object { $_.Result -eq 'Failed' }
+    if ($failedUpdates) {
+      foreach ($update in $failedUpdates) {
+        Write-Host "Retrying update: $($update.Title)"
+        Install-WindowsUpdate -KBArticleID $update.KBArticleID -AcceptAll -IgnoreReboot -AutoReboot
+      }
+    }
+  register: retry_result
+  notify:
+    - Notify update status
+    - Log update history
+
+- name: Notify update status
+  debug:
+    msg: |
+      Successful updates: {{ update_history.stdout_lines | selectattr('Result', 'equalto', 'Succeeded') | map(attribute='Title') | list }}
+      Failed updates: {{ update_history.stdout_lines | selectattr('Result', 'equalto', 'Failed') | map(attribute='Title') | list }}
+
+- name: Log update history
+  win_copy:
+    content: "{{ update_history.stdout }}"
+    dest: "C:\\Windows\\Temp\\update_history.log"
