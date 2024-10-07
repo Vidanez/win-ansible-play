@@ -308,17 +308,25 @@ I think this was not available in the API, RESTAPI or Python or any other (Ruby 
 To ensure optimal performance, you need to manage the allocation of CPU, memory, and storage resources effectively. Here are some key practices:
 
 Resource Allocation Settings can be used in order to take care of different VMs not interfere each other seeking for resources:
+
         Shares: Determine the relative importance of a VM. Higher shares mean higher priority when resources are contested.
+        
         Reservation: Guarantee a minimum amount of resources for a VM in case of maximun consumption by others
+        
         Limit: Set an upper bound on the resources a VM can consume.
+
 Also this this the right other to apply them in a site with limited resources available.
 
 Right-Sizing VMs:
+
     Analyze actual resource usage over a time trying to cover peaks, and adjust CPU, memory, and storage allocations accordingly
+    
     Avoid overcommitting resources, even if the vendor chase you for it, which can lead to performance degradation.
     
 Monitoring and Adjusting:
+
 Continuously monitor VM performance and adjust resource allocations as needed and if we have licnese apply the usage of DRS within the cluster.
+
 Use tools like VMware vRealize Operations (VROPS) or similar to automate performance management and optimization.
 
 ### Deploy a VM by ansible
