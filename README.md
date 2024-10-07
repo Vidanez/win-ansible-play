@@ -21,11 +21,15 @@ Notes:
     │   └── testing
     ├── playbooks
     │   ├── deploy_app.yml
+    │   ├── deploy_vm.yml
     │   ├── install_and_start_services.yml
     │   ├── install_iis.yml
     │   ├── install_packages.yml
     │   ├── install_w32time.yml
-    │   └── manage_service.yml
+    │   ├── install_windows_update_module.yml
+    │   ├── install_wmi_exporter.yml
+    │   ├── manage_service.yml
+    │   └── run_windows_updates.yml
     ├── roles
     │   ├── deploy_app
     │   │   ├── tasks
@@ -35,21 +39,32 @@ Notes:
     │   ├── iis
     │   │   └── tasks
     │   │       └── main.yml
-    │   ├── install_packages
-    │   │   ├── tasks
+    │   ├── install_windows_update_module
+    │   │   ├── handlers
     │   │   │   └── main.yml
-    │   │   └── vars
+    │   │   └── tasks
     │   │       └── main.yml
     │   ├── manage_services
     │   │   └── tasks
     │   │       └── main.yml
-    │   └── w32time
+    │   ├── run_windows_updates
+    │   │   ├── handlers
+    │   │   │   └── main.yml
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── w32time
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   └── wmi_exporter
     │       └── tasks
     │           └── main.yml
     └── vars
+        ├── basicVM.yml
         ├── development.yml
         ├── production.yml
         └── testing.yml
+
+
 ```
 
 
