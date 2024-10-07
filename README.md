@@ -309,9 +309,11 @@ To ensure optimal performance, you need to manage the allocation of CPU, memory,
 
 Resource Allocation Settings can be used in order to take care of different VMs not interfere each other seeking for resources:
 
-Shares: Determine the relative importance of a VM. Higher shares mean higher priority when resources are contested.
-Reservation: Guarantee a minimum amount of resources for a VM in case of maximun consumption by others
-Limit: Set an upper bound on the resources a VM can consume.
+- Shares: Determine the relative importance of a VM. Higher shares mean higher priority when resources are contested.
+
+- Reservation: Guarantee a minimum amount of resources for a VM in case of maximun consumption by others
+
+- Limit: Set an upper bound on the resources a VM can consume.
 
 Also this this the right other to apply them in a site with limited resources available.
 
