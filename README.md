@@ -269,6 +269,9 @@ We need to identify potential bottlenecks or failures, you should:
 - Use Visualization Tools: Tools like Grafana can help visualize data and spot trends.
 - Set Thresholds and Alerts: Configure alerts for metrics that exceed predefined thresholds
 
+To do the actual work of monitoring and alerting we have several alternatives, native like MMA with a SCOM (or Azure AMA) or using vmi_exporter and reciever/monitoring like Prometheus and visualization option of Grafana. in this example I would use the last one because is OpenSource
+
+
 
 
 # 3. VMWare
