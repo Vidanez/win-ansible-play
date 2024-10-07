@@ -300,9 +300,18 @@ Using templates (Vms can be transform in templates) we can deploy templates dire
 In order to automate the best aproach is to do it using templates. The VM approach is available but has the tendency to complicate things and we need to keep KISS approach. 
 
 ISSUE using Ansible to deploy VMs. One of the thing that happens is that if we use ansible to deploy from template it use the "clone" feature and not the "deploy from template" feature, so this apply a limit the new VMs to be create only in the same datastore cluster where the template is located.
+I think this was not available in the API, RESTAPI or Python or any other (Ruby Java..)
 
-10 Years ago I created this powershell code https://github.com/Vidanez/DeployVMs/tree/master that is still valid to deploy VMs in bulk not cloning but deploying from template.
+10 Years ago I created this powershell code https://github.com/Vidanez/DeployVMs/tree/master that is still valid to deploy VMs in bulk not cloning but deploying from template, because that feature it was available in the powercli.
 
+For the purpose of this example I have crete a collection of vars at 
+ **vars/basicVM.yml**
+
+and the usage would be:
+
+  ```sh
+  ansible-playbook -i localhost playbooks/deploy_vm_without_galaxy.yml -e @vars/basicVM.yml
+  ```
 
 
 # 4. Windows Updates Management
