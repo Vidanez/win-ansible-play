@@ -5,6 +5,10 @@
 4. Windows updates management
 5. Antivirus Management
 
+Notes: 
+- I'm not using ansible galaxy on purpose because I want to show direct usage of the roles. 
+- I'm not using neither ansible vault to dont over complicate this example
+
 ## Folder Structure for all points
 
 ```
@@ -271,7 +275,22 @@ We need to identify potential bottlenecks or failures, you should:
 
 To do the actual work of monitoring and alerting we have several alternatives, native like MMA with a SCOM (or Azure AMA) or using vmi_exporter and reciever/monitoring like Prometheus and visualization option of Grafana. in this example I would use the last one because is OpenSource
 
+For the purpose of this exercise I'm just installing the vmi_exporter and configuring it to a prometheus server that is not part of the scope of the exercise to create
 
+**File**: `playbooks/install_wmi_exporter.yml`
+
+**Usage:**:
+  ```sh
+   ansible-playbook -i inventory/development playbooks/install_wmi_exporter.yml -e @vars/development.yml
+  ```
+
+  ```sh
+   ansible-playbook -i inventory/testing playbooks/install_wmi_exporter.yml -e @vars/testing.yml
+  ```
+
+  ```sh
+   ansible-playbook -i inventory/production playbooks/install_wmi_exporter.yml -e @vars/production.yml
+  ```
 
 
 # 3. VMWare
@@ -282,7 +301,8 @@ In order to automate the best aproach is to do it using templates. The VM approa
 
 ISSUE using Ansible to deploy VMs. One of the thing that happens is that if we use ansible to deploy from template it use the "clone" feature and not the "deploy from template" feature, so this apply a limit the new VMs to be create only in the same datastore cluster where the template is located.
 
-10 Years ago I created this code https://github.com/Vidanez/DeployVMs/tree/master that is still valid to deploy VMs in bulk not cloning but deploying from template.
+10 Years ago I created this powershell code https://github.com/Vidanez/DeployVMs/tree/master that is still valid to deploy VMs in bulk not cloning but deploying from template.
+
 
 
 # 4. Windows Updates Management
