@@ -364,8 +364,29 @@ At roles/windows_updates/handlers/main.yml:
 - We retry failed updates using the Install-WindowsUpdate cmdlet with the specific KBArticleID.
 - We notify about the update status, listing successful and failed updates.
 
+Unsucessful run will generate a mail to be sent as we can see in the variables 
 
-
+### Usage
+To Install the Windows Update Module
+```sh
+ansible-playbook -i inventories/development.yml playbooks/install_windows_update_module.yml
+```
+```sh
+ansible-playbook -i inventories/test.yml playbooks/install_windows_update_module.yml
+```
+```sh
+ansible-playbook -i inventories/production.yml playbooks/install_windows_update_module.yml
+```
+To Run Windows Updates
+```sh
+ansible-playbook -i inventories/development.yml playbooks/run_windows_updates.yml
+```
+```sh
+ansible-playbook -i inventories/test.yml playbooks/run_windows_updates.yml
+```sh
+```
+ansible-playbook -i inventories/production.yml playbooks/run_windows_updates.yml
+```
 # 5. Antivirus Management 
 
 
