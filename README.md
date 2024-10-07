@@ -408,8 +408,70 @@ ansible-playbook -i inventories/production.yml playbooks/run_windows_updates.yml
 ```
 
 
-
 # 5. Antivirus Management 
+
+To do this part I'm taking in consideration Windows defender and ClamAV for linux because the are widely use and are free products.
+We can also use Ansible to manage the installation, and schedule the run of the antivirus. Using scheduler at each OS, windows to use schedule and linux to use cronjob.
+
+We have 2 roles fo the installation per kind of OS. Playbook will install based on the OS using variable related to os_family fact. 
+Roles:
+roles/install_windows_defender
+roles/install_clamav
+Playbook:
+playbooks/install_antivirus.yml
+
+### Usage
+```sh
+ansible-playbook -i inventories/development.yml playbooks/install_antivirus.yml
+```
+```sh
+ansible-playbook -i inventories/test.yml playbooks/install_antivirus.yml
+```
+```sh
+ansible-playbook -i inventories/production.yml playbooks/install_antivirus.yml
+```
+
+The rest of the roles will consider we are running against the appropiate group by OS.
+
+Now let's schedule the run including update of the database per product in the following roles
+Roles:
+roles/update_windows_defender
+roles/update_clamav
+
+And playbooks to be called:
+Playbooks:
+playbooks/update_clamav.yml
+playbooks/update_windows_defender.yml 
+
+Also in this case we have declare variables to do the schedules inside the role to accomplish to all nodes. Whciih to be honest is not the best of the solution in terms of CPU usage but we are doing here a gues exercise.
+Vars:
+roles/update_windows_defender/vars/main.yml
+roles/update_clamav/vars/main.yml
+
+### Usage
+Windows:
+```sh
+ansible-playbook -i inventories/development.yml playbooks/update_windows_defender.yml --limit 'all:!linux'
+```
+```sh
+ansible-playbook -i inventories/test.yml playbooks/update_windows_defender.yml --limit 'all:!linux'
+```
+```sh
+ansible-playbook -i inventories/production.yml playbooks/update_windows_defender.yml --limit 'all:!linux'
+```
+Linux:
+```sh
+ansible-playbook -i inventories/development.yml playbooks/update_clamav.yml --limit 'all:!windows'
+```
+```sh
+ansible-playbook -i inventories/test.yml playbooks/update_clamav.yml --limit 'all:!windows'
+```
+```sh
+ansible-playbook -i inventories/production.yml playbooks/update_clamav.yml --limit 'all:!windows'
+```
+
+
+
 
 
 
