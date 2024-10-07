@@ -1,0 +1,6 @@
+---
+clamav_scan_minute: "0"
+clamav_scan_hour: "2"
+clamav_scan_path: "/home"
+clamav_db_update_minute: "0"
+clamav_db_update_hour: "1"

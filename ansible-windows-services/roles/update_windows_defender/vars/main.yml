@@ -1,0 +1,5 @@
+---
+defender_scan_minute: "0"
+defender_scan_hour: "2"
+defender_db_update_minute: "0"
+defender_db_update_hour: "1"

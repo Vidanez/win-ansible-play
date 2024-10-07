@@ -1,0 +1,5 @@
+---
+- name: Update and Schedule Windows Defender on Windows
+  hosts: windows
+  roles:
+    - role: update_windows_defender

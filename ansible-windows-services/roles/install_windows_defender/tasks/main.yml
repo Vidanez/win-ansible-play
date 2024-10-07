@@ -1,0 +1,9 @@
+---
+- name: Install Chocolatey
+  win_chocolatey:
+    state: present
+
+- name: Install Windows Defender using Chocolatey
+  win_chocolatey:
+    name: microsoft-windows-defender
+    state: present

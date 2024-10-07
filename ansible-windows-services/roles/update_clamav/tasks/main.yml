@@ -1,0 +1,41 @@
+---
+- name: Update ClamAV database
+  command: freshclam
+
+- name: Check if ClamAV scan schedule exists
+  cron:
+    name: "ClamAV Scan"
+    state: present
+  register: clamav_scan_cron_exists
+
+- name: Remove existing ClamAV scan schedule
+  cron:
+    name: "ClamAV Scan"
+    state: absent
+  when: clamav_scan_cron_exists is defined and clamav_scan_cron_exists.exists
+
+- name: Schedule ClamAV scan
+  cron:
+    name: "ClamAV Scan"
+    minute: "{{ clamav_scan_minute }}"
+    hour: "{{ clamav_scan_hour }}"
+    job: "/usr/bin/clamscan -r {{ clamav_scan_path }}"
+
+- name: Check if ClamAV DB update schedule exists
+  cron:
+    name: "ClamAV DB Update"
+    state: present
+  register: clamav_db_cron_exists
+
+- name: Remove existing ClamAV DB update schedule
+  cron:
+    name: "ClamAV DB Update"
+    state: absent
+  when: clamav_db_cron_exists is defined and clamav_db_cron_exists.exists
+
+- name: Schedule ClamAV DB update
+  cron:
+    name: "ClamAV DB Update"
+    minute: "{{ clamav_db_update_minute }}"
+    hour: "{{ clamav_db_update_hour }}"
+    job: "/usr/bin/freshclam"

@@ -1,0 +1,5 @@
+---
+- name: Update and Schedule ClamAV on Linux
+  hosts: linux
+  roles:
+    - role: update_clamav

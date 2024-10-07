@@ -1,0 +1,36 @@
+---
+- name: Update Windows Defender definitions
+  win_shell: |
+    Update-MpSignature
+
+- name: Check if Windows Defender scan schedule exists
+  win_shell: |
+    $schedule = Get-MpPreference | Select-Object -ExpandProperty ScanScheduleQuickScanTime
+    if ($schedule -ne $null) { Write-Output "exists" }
+  register: defender_scan_schedule_exists
+
+- name: Remove existing Windows Defender scan schedule
+  win_shell: |
+    Set-MpPreference -ScanScheduleQuickScanTime $null
+  when: defender_scan_schedule_exists.stdout == "exists"
+
+- name: Schedule Windows Defender scan
+  win_shell: |
+    Set-MpPreference -ScanScheduleQuickScanTime (Get-Date -Hour {{ defender_scan_hour }} -Minute {{ defender_scan_minute }} -Second 0)
+
+- name: Check if Windows Defender DB update schedule exists
+  win_shell: |
+    $schedule = Get-ScheduledTask -TaskName "Windows Defender Update"
+    if ($schedule -ne $null) { Write-Output "exists" }
+  register: defender_db_update_schedule_exists
+
+- name: Remove existing Windows Defender DB update schedule
+  win_shell: |
+    Unregister-ScheduledTask -TaskName "Windows Defender Update" -Confirm:$false
+  when: defender_db_update_schedule_exists.stdout == "exists"
+
+- name: Schedule Windows Defender DB update
+  win_shell: |
+    $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "Update-MpSignature"
+    $trigger = New-ScheduledTaskTrigger -Daily -At (Get-Date -Hour {{ defender_db_update_hour }} -Minute {{ defender_db_update_minute }} -Second 0)
+    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Windows Defender Update" -Description "Daily update of Windows Defender definitions"

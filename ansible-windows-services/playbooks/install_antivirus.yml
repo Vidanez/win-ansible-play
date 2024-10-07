@@ -1,0 +1,11 @@
+---
+- name: Install Antivirus Based on OS
+  hosts: all
+  tasks:
+    - name: Determine OS Family
+      set_fact:
+        os_family: "{{ ansible_os_family }}"
+
+  roles:
+    - { role: install_clamav, when: os_family == 'Debian' or os_family == 'RedHat' }
+    - { role: install_windows_defender, when: os_family == 'Windows' }
