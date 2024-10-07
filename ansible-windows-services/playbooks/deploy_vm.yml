@@ -1,0 +1,74 @@
+---
+- name: Deploy a new VM in VMware
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - ../vars/basicVM.yml
+
+  tasks:
+    - name: Create a new VM from template
+      uri:
+        url: "https://{{ vcenter_hostname }}/rest/vcenter/vm"
+        method: POST
+        user: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        body_format: json
+        headers:
+          Content-Type: "application/json"
+        body: |
+          {
+            "spec": {
+              "name": "{{ vm_name }}",
+              "guest_OS": "otherGuest",
+              "placement": {
+                "datacenter": "{{ datacenter }}",
+                "cluster": "{{ cluster }}"
+              },
+              "hardware": {
+                "memory": { "size_MiB": {{ memory_mb }} },
+                "cpu": { "count": {{ num_cpus }} }
+              },
+              "disks": [
+                {
+                  "value": {
+                    "capacity": {{ disk_size_gb }} * 1024 * 1024 * 1024,
+                    "type": "thin"
+                  }
+                }
+              ],
+              "nics": [
+                {
+                  "value": {
+                    "network": "{{ network_name }}",
+                    "type": "dhcp"
+                  }
+                }
+              ]
+            }
+          }
+        validate_certs: no
+      register: deploy_result
+
+    - name: Set VM resource allocation
+      uri:
+        url: "https://{{ vcenter_hostname }}/rest/vcenter/vm/{{ deploy_result.json.value }}/hardware"
+        method: PATCH
+        user: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        body_format: json
+        headers:
+          Content-Type: "application/json"
+        body: |
+          {
+            "cpu": {
+              "shares": "high",
+              "reservation": {{ cpu_reservation }},
+              "limit": {{ cpu_limit }}
+            },
+            "memory": {
+              "shares": "high",
+              "reservation": {{ memory_reservation }},
+              "limit": {{ memory_limit }}
+            }
+          }
+        validate_certs: no

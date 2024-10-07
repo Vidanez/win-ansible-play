@@ -1,0 +1,23 @@
+---
+- name: Install and configure wmi_exporter
+  hosts: windows
+  roles:
+    - role: wmi_exporter
+    - role: manage_services
+      vars:
+        service_name: "windows_exporter"
+      tags: 
+        - start
+
+handlers:
+  - name: "Notify: wmi_exporter installation"
+    debug:
+      msg: "wmi_exporter has been installed."
+
+  - name: "Notify: wmi_exporter configuration"
+    debug:
+      msg: "wmi_exporter has been configured."
+
+  - name: "Notify: wmi_exporter service start failed"
+    debug:
+      msg: "Failed to start wmi_exporter service."

@@ -1,0 +1,16 @@
+# vars/basicVM.yml
+vcenter_hostname: "vcenter.local"
+vcenter_username: "admin"
+vcenter_password: "password"
+datacenter: "Datacenter"
+cluster: "Cluster"
+vm_name: "new_vm"
+template_name: "template"
+memory_mb: 2048
+num_cpus: 2
+disk_size_gb: 20
+network_name: "VM Network"
+cpu_reservation: 1000
+cpu_limit: 2000
+memory_reservation: 1024
+memory_limit: 2048

@@ -1,0 +1,20 @@
+---
+- name: Download wmi_exporter
+  win_chocolatey:
+    name: prometheus-windows-exporter
+    state: present
+  register: wmi_exporter_installed
+  notify:
+    - "Notify: wmi_exporter installation"
+
+- name: Configure wmi_exporter
+  win_shell: |
+    Set-Content -Path "C:\\Program Files\\wmi_exporter\\config.yml" -Value @"
+    ---
+    collectors:
+      enabled: cpu, memory, net, disk
+    prometheus:
+      url: http://{{ prometheus_server }}:9090
+    "@
+  notify:
+    - "Notify: wmi_exporter configuration"
