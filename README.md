@@ -342,4 +342,39 @@ and the usage would be:
 
 # 4. Windows Updates Management
 
+If we carry on with the same exercise we are doing, we will carry these operations using Ansible.
+At roles/windows_updates/tasks/main.yml 
+- We use Chocolatey to install the PSWindowsUpdate module, which provides cmdlets for managing Windows updates.
+- We use the win_shell module to run PowerShell commands that check for available updates.
+- We use the win_shell module to run PowerShell commands that install the updates.
+- After installing updates, we capture the update history to determine which updates were successful and which failed
+- Note: We have some registers declared in the code, we dont use them after just for debugging or logging purpose
+
+At the playbooks/manage_windows_updates.yml
+- We do the installation
+- We ensure the Windows Update service (wuauserv) is running
+
+### Capturing Information for Successful and Unsuccessful Updates
+At roles/windows_updates/tasks/main.yml:
+- We capture the result of installing updates using register: update_result and process it in the handler Check update status.
+- We capture the update history using the Get-WindowsUpdateLog cmdlet and save it using register: update_history.
+
+At roles/windows_updates/handlers/main.yml:
+- We log the update history to a file using the win_copy module.
+- We retry failed updates using the Install-WindowsUpdate cmdlet with the specific KBArticleID.
+- We notify about the update status, listing successful and failed updates.
+
+
 # 5. Antivirus Management 
+
+
+
+
+
+
+
+
+
+
+
+
