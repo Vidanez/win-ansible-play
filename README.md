@@ -398,10 +398,11 @@ ansible-playbook -i inventories/development.yml playbooks/run_windows_updates.ym
 ```
 ```sh
 ansible-playbook -i inventories/test.yml playbooks/run_windows_updates.yml
-```sh
 ```
+```sh
 ansible-playbook -i inventories/production.yml playbooks/run_windows_updates.yml
 ```
+
 # 5. Antivirus Management 
 
 
