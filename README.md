@@ -12,6 +12,7 @@ Notes:
 ## Folder Structure for all points
 
 ```
+.
 ├── LICENSE
 ├── README.md
 └── ansible-windows-services
@@ -22,13 +23,16 @@ Notes:
     ├── playbooks
     │   ├── deploy_app.yml
     │   ├── deploy_vm.yml
+    │   ├── install_and_start_services.yml
+    │   ├── install_antivirus.yml
     │   ├── install_iis.yml
-    │   ├── install_packages.yml
     │   ├── install_w32time.yml
     │   ├── install_windows_update_module.yml
     │   ├── install_wmi_exporter.yml
     │   ├── manage_service.yml
-    │   └── run_windows_updates.yml
+    │   ├── run_windows_updates.yml
+    │   ├── update_clamav.yml
+    │   └── update_windows_defender.yml
     ├── roles
     │   ├── deploy_app
     │   │   ├── tasks
@@ -36,6 +40,12 @@ Notes:
     │   │   └── vars
     │   │       └── main.yml
     │   ├── iis
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── install_clamav
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── install_windows_defender
     │   │   └── tasks
     │   │       └── main.yml
     │   ├── install_windows_update_module
@@ -51,6 +61,16 @@ Notes:
     │   │   │   └── main.yml
     │   │   └── tasks
     │   │       └── main.yml
+    │   ├── update_clamav
+    │   │   ├── tasks
+    │   │   │   └── main.yml
+    │   │   └── vars
+    │   │       └── main.yml
+    │   ├── update_windows_defender
+    │   │   ├── tasks
+    │   │   │   └── main.yml
+    │   │   └── vars
+    │   │       └── main.yml
     │   ├── w32time
     │   │   └── tasks
     │   │       └── main.yml
@@ -62,8 +82,6 @@ Notes:
         ├── development.yml
         ├── production.yml
         └── testing.yml
-
-
 ```
 
 
