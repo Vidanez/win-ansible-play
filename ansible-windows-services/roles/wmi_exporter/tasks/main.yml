@@ -4,8 +4,6 @@
     name: prometheus-windows-exporter
     state: present
   register: wmi_exporter_installed
-  notify:
-    - "Notify: wmi_exporter installation"
 
 - name: Configure wmi_exporter
   win_shell: |
@@ -16,5 +14,3 @@
     prometheus:
       url: http://{{ prometheus_server }}:9090
     "@
-  notify:
-    - "Notify: wmi_exporter configuration"

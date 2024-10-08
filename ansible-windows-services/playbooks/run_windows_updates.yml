@@ -18,3 +18,4 @@
         if ($emailBody -match "Failed updates:") {
             Send-MailMessage -To $emailRecipient -From "noreply@example.com" -Subject $emailSubject -Body $emailBody -SmtpServer "smtp.example.com"
       when: update_history is defined
+      ignore_errors: true

@@ -4,14 +4,14 @@
     Import-Module PSWindowsUpdate
     Get-WindowsUpdate -AcceptAll -IgnoreReboot
   register: available_updates
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Install updates
   win_shell: |
     Import-Module PSWindowsUpdate
     Install-WindowsUpdate -AcceptAll -IgnoreReboot -AutoReboot
   register: update_result
-  ignore_errors: yes
+  ignore_errors: true
   notify:
     - Check update status
 
@@ -20,6 +20,6 @@
     Import-Module PSWindowsUpdate
     Get-WindowsUpdateLog
   register: update_history
-  ignore_errors: yes
+  ignore_errors: true
   notify:
     - Log update history
